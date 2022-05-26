@@ -40,14 +40,14 @@ main {
   width: 90%;
   margin: auto;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 2rem;
 }
 .search-input {
   display: flex;
   align-items: center;
   background-color: white;
-  width: 40%;
+  width: 100%;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
@@ -66,12 +66,14 @@ main {
   border-radius: 5px;
 }
 .select-options {
+  width: 50%;
   position: relative;
   overflow: hidden;
   border-radius: 5px;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
 }
 .select-options select {
+  width: 100%;
   padding: 1.4rem;
   padding-right: 5rem;
   appearance: none;
@@ -80,6 +82,7 @@ main {
   border: none;
   outline: none;
   cursor: pointer;
+  background-color: white;
 }
 .select-options::after {
   content: "\25BC";
@@ -99,7 +102,7 @@ main {
   width: 90%;
   margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 4rem;
   padding-top: 3rem;
 }
@@ -128,4 +131,34 @@ main {
 .description p span {
   padding-left: 1rem;
   font-weight: 600;
+}
+.more-button {
+  width: 100%;
+  margin: 2rem 0rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.more-button button {
+  background-color: #4a4483;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  cursor: pointer;
+}
+.more-button button:hover {
+  border: 2px solid grey;
+}
+@media (min-width: 822px) {
+  .search-options {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .search-input {
+    width: 40%;
+  }
+  .select-options {
+    width: 20%;
+  }
 }
