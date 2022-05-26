@@ -1,7 +1,10 @@
 //Variables
 let i = 0;
-let j = 12;
+const picturesAtEachPage = 12;
+let j = i + picturesAtEachPage;
+let dataArray;
 const allCountries = document.querySelector(".countries");
+const moreButton = document.querySelector(".more-button button");
 
 //Functions
 function countryMaker(data) {
@@ -9,7 +12,7 @@ function countryMaker(data) {
     console.log(data[i]);
     const eachCountry = document.createElement("div");
     eachCountry.classList.add("each-country");
-    const capital = data.capital ? data.capital[0] : "undefined";
+    const capital = data[i].capital ? data[i].capital[0] : "undefined";
     eachCountry.innerHTML = `          
         <div class="flag">
             <img src=${data[i].flags.svg} alt="" />
@@ -35,8 +38,14 @@ async function fetchAllCountriesData() {
     },
   });
   const data = await response.json();
+  dataArray = data;
   countryMaker(data);
 }
 fetchAllCountriesData();
 
 //Event-Listeners
+moreButton.addEventListener("click", () => {
+  i = j;
+  j = i + picturesAtEachPage;
+  countryMaker(dataArray);
+});
