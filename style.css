@@ -52,7 +52,6 @@ main {
   border-radius: 5px;
 }
 .search-input-image {
-  width: 20%;
   padding: 1.5rem;
   display: flex;
   justify-content: center;
@@ -100,7 +99,7 @@ main {
   width: 90%;
   margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 4rem;
   padding-top: 3rem;
 }
