@@ -1,0 +1,132 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: "Nunito Sans", sans-serif;
+}
+header {
+  width: 100%;
+  min-height: 10vh;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
+}
+.head {
+  width: 90%;
+  margin: auto;
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.theme {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.theme span {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+main {
+  background-color: #fafafa;
+  min-height: 90vh;
+  padding: 3rem 0rem;
+}
+.search-options {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.search-input {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  width: 40%;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.search-input-image {
+  width: 20%;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+.search-input input {
+  width: 100%;
+  padding: 1.5rem;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+.select-options {
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
+}
+.select-options select {
+  padding: 1.4rem;
+  padding-right: 5rem;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.select-options::after {
+  content: "\25BC";
+  position: absolute;
+  background: white;
+  color: black;
+  top: 0;
+  right: 0;
+  padding: 1.5rem 1rem;
+  pointer-events: none;
+}
+.search-options option {
+  width: 100%;
+  border: 1px solid black;
+}
+.countries {
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 4rem;
+  padding-top: 3rem;
+}
+.each-country {
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.flag {
+  width: 100%;
+}
+.flag img {
+  width: 100%;
+}
+.name-description {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.description {
+  font-size: 1.1rem;
+}
+.description p {
+  font-weight: 800;
+}
+.description p span {
+  padding-left: 1rem;
+  font-weight: 600;
+}
