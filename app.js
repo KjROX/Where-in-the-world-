@@ -11,8 +11,15 @@ function searchCountry(query) {
   const matchingCountries = [];
   dataArray.forEach((obj) => {
     let name = obj.name.common;
+    let capital = obj.capital ? obj.capital[0] : null;
     name = name.toLowerCase().trim();
     query = query.toLowerCase().trim();
+    if (capital) {
+      capital = capital.toLowerCase().trim();
+      if (capital === query || capital.includes(query)) {
+        matchingCountries.push(obj);
+      }
+    }
     if (name === query || name.includes(query)) {
       matchingCountries.push(obj);
     }
@@ -73,18 +80,34 @@ moreButton.addEventListener("click", () => {
   countryMaker(dataArray);
 });
 
+function noResultsFound() {
+  allCountries.innerHTML = `
+  <div>
+  <p>Sorry!</p>
+  <p>No Results Found</p>
+  </div>
+  `;
+  allCountries.classList.add("flex");
+  moreButton.classList.add("not-visible");
+}
+
 input.addEventListener("keydown", (e) => {
-  moreButton.style.opacity = "0.5";
-  moreButton.style.pointerEvents = "none";
+  moreButton.classList.add("not-visible");
   const matchingCountries = searchCountry(e.currentTarget.value);
-  allCountries.innerHTML = ``;
-  countryMaker(matchingCountries);
+  if (matchingCountries.length === 0) {
+    noResultsFound();
+  } else {
+    allCountries.innerHTML = ``;
+    allCountries.classList.remove("flex");
+    countryMaker(matchingCountries);
+  }
+
   if (e.currentTarget.value === ``) {
     i = 0;
     j = 12;
     allCountries.innerHTML = ``;
+    allCountries.classList.remove("flex");
     countryMaker(dataArray);
-    moreButton.style.opacity = "1";
-    moreButton.style.pointerEvents = "all";
+    moreButton.classList.remove("not-visible");
   }
 });
