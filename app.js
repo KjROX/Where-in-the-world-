@@ -1,19 +1,30 @@
 //Variables
 let i = 0;
-const picturesAtEachPage = 12;
-let j = i + picturesAtEachPage;
+let j = i + 12;
 let dataArray;
 const allCountries = document.querySelector(".countries");
 const moreButton = document.querySelector(".more-button button");
+const input = document.querySelector(".search-input input");
 
 //Functions
-function countryMaker(data) {
-  for (; i < j; i++) {
-    console.log(data[i]);
-    const eachCountry = document.createElement("div");
-    eachCountry.classList.add("each-country");
-    const capital = data[i].capital ? data[i].capital[0] : "undefined";
-    eachCountry.innerHTML = `          
+function searchCountry(query) {
+  const matchingCountries = [];
+  dataArray.forEach((obj) => {
+    let name = obj.name.common;
+    name = name.toLowerCase().trim();
+    query = query.toLowerCase().trim();
+    if (name === query || name.includes(query)) {
+      matchingCountries.push(obj);
+    }
+  });
+  return matchingCountries;
+}
+
+function countryMAkingCode(data, i) {
+  const eachCountry = document.createElement("div");
+  eachCountry.classList.add("each-country");
+  const capital = data[i].capital ? data[i].capital[0] : "undefined";
+  eachCountry.innerHTML = `          
         <div class="flag">
             <img src=${data[i].flags.svg} alt="" />
         </div>
@@ -25,7 +36,19 @@ function countryMaker(data) {
               <p class="capital">Capital:<span>${capital}</span></p>
             </div>
         </div>`;
-    allCountries.appendChild(eachCountry);
+  allCountries.appendChild(eachCountry);
+}
+
+function countryMaker(data) {
+  console.log(data);
+  if (data.length < 12) {
+    for (let i = 0; i < data.length; i++) {
+      countryMAkingCode(data, i);
+    }
+  } else {
+    for (; i < j; i++) {
+      countryMAkingCode(data, i);
+    }
   }
 }
 
@@ -46,6 +69,22 @@ fetchAllCountriesData();
 //Event-Listeners
 moreButton.addEventListener("click", () => {
   i = j;
-  j = i + picturesAtEachPage;
+  j = i + 12;
   countryMaker(dataArray);
+});
+
+input.addEventListener("keydown", (e) => {
+  moreButton.style.opacity = "0.5";
+  moreButton.style.pointerEvents = "none";
+  const matchingCountries = searchCountry(e.currentTarget.value);
+  allCountries.innerHTML = ``;
+  countryMaker(matchingCountries);
+  if (e.currentTarget.value === ``) {
+    i = 0;
+    j = 12;
+    allCountries.innerHTML = ``;
+    countryMaker(dataArray);
+    moreButton.style.opacity = "1";
+    moreButton.style.pointerEvents = "all";
+  }
 });
