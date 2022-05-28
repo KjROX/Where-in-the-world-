@@ -5,6 +5,7 @@ let dataArray;
 const allCountries = document.querySelector(".countries");
 const moreButton = document.querySelector(".more-button button");
 const input = document.querySelector(".search-input input");
+const filterByRegion = document.querySelector(".select-options select");
 
 //Functions
 function searchCountry(query) {
@@ -46,6 +47,17 @@ function countryMAkingCode(data, i) {
   allCountries.appendChild(eachCountry);
 }
 
+function noResultsFound() {
+  allCountries.innerHTML = `
+  <div>
+  <p>Sorry!</p>
+  <p>No Results Found</p>
+  </div>
+  `;
+  allCountries.classList.add("flex");
+  moreButton.classList.add("not-visible");
+}
+
 function countryMaker(data) {
   console.log(data);
   if (data.length < 12) {
@@ -80,17 +92,6 @@ moreButton.addEventListener("click", () => {
   countryMaker(dataArray);
 });
 
-function noResultsFound() {
-  allCountries.innerHTML = `
-  <div>
-  <p>Sorry!</p>
-  <p>No Results Found</p>
-  </div>
-  `;
-  allCountries.classList.add("flex");
-  moreButton.classList.add("not-visible");
-}
-
 input.addEventListener("keydown", (e) => {
   moreButton.classList.add("not-visible");
   const matchingCountries = searchCountry(e.currentTarget.value);
@@ -110,4 +111,7 @@ input.addEventListener("keydown", (e) => {
     countryMaker(dataArray);
     moreButton.classList.remove("not-visible");
   }
+});
+filterByRegion.addEventListener("click", (e) => {
+  console.log(e.target.value);
 });
