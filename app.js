@@ -32,11 +32,15 @@ function searchCountry(query) {
     if (capital) {
       capital = capital.toLowerCase().trim();
       if (capital === query || capital.includes(query)) {
-        matchingCountries.push(obj);
+        if (!matchingCountries.includes(obj)) {
+          matchingCountries.push(obj);
+        }
       }
     }
     if (name === query || name.includes(query)) {
-      matchingCountries.push(obj);
+      if (!matchingCountries.includes(obj)) {
+        matchingCountries.push(obj);
+      }
     }
   });
   return matchingCountries;
@@ -83,6 +87,9 @@ function countryMaker(data) {
       countryMAkingCode(data, i);
     }
   }
+  if (i === data.length) {
+    moreButton.classList.add("fade");
+  }
 }
 
 async function fetchAllCountriesData() {
@@ -110,11 +117,12 @@ moreButton.addEventListener("click", () => {
   }
 });
 
-input.addEventListener("keydown", (e) => {
-  if (e.keyCode >= 65 && e.keyCode <= 90) {
+input.addEventListener("keyup", (e) => {
+  if ((e.keyCode >= 65 && e.keyCode <= 90) || e.key === "Enter") {
     console.log(e.currentTarget.value);
     moreButton.classList.remove("not-visible");
     moreButton.classList.remove("fade");
+    searchResultArray = [];
     searchResultArray = searchCountry(e.currentTarget.value);
     if (searchResultArray.length < 12) {
       moreButton.classList.add("fade");
@@ -131,17 +139,18 @@ input.addEventListener("keydown", (e) => {
       countryMaker(searchResultArray);
       clickedOnOption = true;
     }
-  }
-
-  if (e.currentTarget.value === ``) {
-    i = 0;
-    j = 12;
-    clickedOnOption = false;
-    allCountries.innerHTML = ``;
-    allCountries.classList.remove("flex");
-    countryMaker(dataArray);
-    moreButton.classList.remove("not-visible");
-    moreButton.classList.remove("fade");
+    if (e.currentTarget.value === ``) {
+      i = 0;
+      j = 12;
+      clickedOnOption = false;
+      allCountries.innerHTML = ``;
+      allCountries.classList.remove("flex");
+      countryMaker(dataArray);
+      moreButton.classList.remove("not-visible");
+      moreButton.classList.remove("fade");
+    }
+  } else {
+    return;
   }
 });
 filterByRegionOptions.forEach((option) => {
