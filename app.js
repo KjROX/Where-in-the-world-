@@ -2,12 +2,26 @@
 let i = 0;
 let j = i + 12;
 let dataArray;
+let clickedOnOption = false;
+let searchResultArray;
 const allCountries = document.querySelector(".countries");
 const moreButton = document.querySelector(".more-button button");
 const input = document.querySelector(".search-input input");
-const filterByRegion = document.querySelector(".select-options select");
+const filterByRegionOptions = Array.from(
+  document.querySelectorAll(".select-options select option")
+);
 
 //Functions
+function searchByRegion(query) {
+  const matchingCountries = [];
+  dataArray.forEach((obj) => {
+    if (obj.region === query) {
+      matchingCountries.push(obj);
+    }
+  });
+  return matchingCountries;
+}
+
 function searchCountry(query) {
   const matchingCountries = [];
   dataArray.forEach((obj) => {
@@ -60,8 +74,8 @@ function noResultsFound() {
 
 function countryMaker(data) {
   console.log(data);
-  if (data.length < 12) {
-    for (let i = 0; i < data.length; i++) {
+  if (data.length < j) {
+    for (; i < data.length; i++) {
       countryMAkingCode(data, i);
     }
   } else {
@@ -89,29 +103,56 @@ fetchAllCountriesData();
 moreButton.addEventListener("click", () => {
   i = j;
   j = i + 12;
-  countryMaker(dataArray);
+  if (clickedOnOption) {
+    countryMaker(searchResultArray);
+  } else {
+    countryMaker(dataArray);
+  }
 });
 
 input.addEventListener("keydown", (e) => {
-  moreButton.classList.add("not-visible");
-  const matchingCountries = searchCountry(e.currentTarget.value);
-  if (matchingCountries.length === 0) {
-    noResultsFound();
-  } else {
-    allCountries.innerHTML = ``;
-    allCountries.classList.remove("flex");
-    countryMaker(matchingCountries);
+  if (e.keyCode >= 65 && e.keyCode <= 90) {
+    console.log(e.currentTarget.value);
+    moreButton.classList.remove("not-visible");
+    moreButton.classList.remove("fade");
+    searchResultArray = searchCountry(e.currentTarget.value);
+    if (searchResultArray.length < 12) {
+      moreButton.classList.add("fade");
+    } else {
+      moreButton.classList.remove("fade");
+    }
+    if (searchResultArray.length === 0) {
+      noResultsFound();
+    } else {
+      allCountries.innerHTML = ``;
+      allCountries.classList.remove("flex");
+      i = 0;
+      j = 12;
+      countryMaker(searchResultArray);
+      clickedOnOption = true;
+    }
   }
 
   if (e.currentTarget.value === ``) {
     i = 0;
     j = 12;
+    clickedOnOption = false;
     allCountries.innerHTML = ``;
     allCountries.classList.remove("flex");
     countryMaker(dataArray);
     moreButton.classList.remove("not-visible");
+    moreButton.classList.remove("fade");
   }
 });
-filterByRegion.addEventListener("click", (e) => {
-  console.log(e.target.value);
+filterByRegionOptions.forEach((option) => {
+  option.addEventListener("click", (e) => {
+    i = 0;
+    j = 12;
+    clickedOnOption = true;
+    searchResultArray = searchByRegion(e.currentTarget.value);
+    allCountries.innerHTML = ``;
+    allCountries.classList.remove("flex");
+    countryMaker(searchResultArray);
+    moreButton.classList.remove("not-visible");
+  });
 });

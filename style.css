@@ -151,6 +151,10 @@ main {
 .more-button button.not-visible {
   display: none;
 }
+.more-button button.fade {
+  opacity: 0.5;
+  pointer-events: none;
+}
 .more-button button {
   background-color: #4a4483;
   color: white;
