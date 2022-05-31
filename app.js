@@ -1,6 +1,6 @@
 //Variables
-let i = 0;
-let j = i + 12;
+let currentCountry = 0;
+let totalCountry = currentCountry + 12;
 let dataArray;
 let clickedOnOption = false;
 let searchResultArray;
@@ -10,6 +10,7 @@ const input = document.querySelector(".search-input input");
 const filterByRegionOptions = Array.from(
   document.querySelectorAll(".select-options select option")
 );
+const moreDetailedInfoForEachCountry = document.querySelector(".modal-outer");
 
 //Functions
 function searchByRegion(query) {
@@ -45,6 +46,64 @@ function searchCountry(query) {
   });
   return matchingCountries;
 }
+function openModal() {
+  moreDetailedInfoForEachCountry.classList.add("open");
+  document.body.classList.add("disable-scroll");
+}
+
+function closeModal() {
+  moreDetailedInfoForEachCountry.classList.remove("open");
+  document.body.classList.remove("disable-scroll");
+}
+
+function handleClickForEachCountry(eachCountry, info) {
+  eachCountry.addEventListener("click", () => {
+    const capital = info.capital ? info.capital[0] : "undefined";
+    const specificCurrency = info.currencies ? info.currencies : "undefined";
+    const topLevelDomain = info.tld ? info.tld[0] : "undefined";
+    moreDetailedInfoForEachCountry.innerHTML = `
+        <div class="escape-div">
+          <button class="escape">
+            <img src="./arrow-left-black.svg" alt="" />
+            <h3>Back</h3>
+          </button>
+        </div>
+        <div class="modal-inner">
+          <div class="image-div"><img src=${info.flags.svg} alt="" /></div>
+          <div class="description">
+            <h1>${info.name.common}</h1>
+            <div class="name-details-parent">
+              <div class="name">
+                <p>Native Name : <span>Belgie</span></p>
+                <p>Population: <span>${info.population}</span></p>
+                <p>Region : <span>${info.region}</span></p>
+                <p>Sub Region : <span>${info.subregion}</span></p>
+                <p>Capital : <span>${capital}</span></p>
+              </div>
+              <div class="details">
+                <p>Top Level Domain : <span>${topLevelDomain}</span></p>
+                <p>Currencies : <span>${specificCurrency.name}</span></p>
+                <p>Languages : <span>Dutch,French,German</span></p>
+              </div>
+            </div>
+            <div class="border-countries">
+              <h1>Border Countries :</h1>
+              <button>France</button>
+              <button>Germany</button>
+              <button>Netherlands</button>
+            </div>
+          </div>
+        </div>
+      `;
+    openModal();
+    const backButton = moreDetailedInfoForEachCountry.querySelector(".escape");
+    const eventListenerAdded = backButton.getAttribute("eventListener");
+    if (!eventListenerAdded) {
+      backButton.addEventListener("click", closeModal);
+      backButton.setAttribute("eventListener", "true");
+    }
+  });
+}
 
 function countryMAkingCode(data, i) {
   const eachCountry = document.createElement("div");
@@ -63,6 +122,7 @@ function countryMAkingCode(data, i) {
             </div>
         </div>`;
   allCountries.appendChild(eachCountry);
+  handleClickForEachCountry(eachCountry, data[i]);
 }
 
 function noResultsFound() {
@@ -78,16 +138,16 @@ function noResultsFound() {
 
 function countryMaker(data) {
   console.log(data);
-  if (data.length < j) {
-    for (; i < data.length; i++) {
-      countryMAkingCode(data, i);
+  if (data.length < totalCountry) {
+    for (; currentCountry < data.length; currentCountry++) {
+      countryMAkingCode(data, currentCountry);
     }
   } else {
-    for (; i < j; i++) {
-      countryMAkingCode(data, i);
+    for (; currentCountry < totalCountry; currentCountry++) {
+      countryMAkingCode(data, currentCountry);
     }
   }
-  if (i === data.length) {
+  if (currentCountry === data.length) {
     moreButton.classList.add("fade");
   }
 }
@@ -108,8 +168,8 @@ fetchAllCountriesData();
 
 //Event-Listeners
 moreButton.addEventListener("click", () => {
-  i = j;
-  j = i + 12;
+  currentCountry = totalCountry;
+  totalCountry = currentCountry + 12;
   if (clickedOnOption) {
     countryMaker(searchResultArray);
   } else {
@@ -134,14 +194,14 @@ input.addEventListener("keyup", (e) => {
     } else {
       allCountries.innerHTML = ``;
       allCountries.classList.remove("flex");
-      i = 0;
-      j = 12;
+      currentCountry = 0;
+      totalCountry = 12;
       countryMaker(searchResultArray);
       clickedOnOption = true;
     }
     if (e.currentTarget.value === ``) {
-      i = 0;
-      j = 12;
+      currentCountry = 0;
+      totalCountry = 12;
       clickedOnOption = false;
       allCountries.innerHTML = ``;
       allCountries.classList.remove("flex");
@@ -155,8 +215,8 @@ input.addEventListener("keyup", (e) => {
 });
 filterByRegionOptions.forEach((option) => {
   option.addEventListener("click", (e) => {
-    i = 0;
-    j = 12;
+    currentCountry = 0;
+    totalCountry = 12;
     clickedOnOption = true;
     searchResultArray = searchByRegion(e.currentTarget.value);
     allCountries.innerHTML = ``;
