@@ -59,8 +59,20 @@ function closeModal() {
 function handleClickForEachCountry(eachCountry, info) {
   eachCountry.addEventListener("click", () => {
     const capital = info.capital ? info.capital[0] : "undefined";
-    const specificCurrency = info.currencies ? info.currencies : "undefined";
+    const ifCurrencyExists = info.currencies
+      ? Object.keys(info.currencies)
+      : null;
+    const specificCurrency = ifCurrencyExists
+      ? info.currencies[ifCurrencyExists[0]].name
+      : "undefined";
     const topLevelDomain = info.tld ? info.tld[0] : "undefined";
+    const nativeNameObjProperty = info.name["nativeName"]
+      ? Object.keys(info.name["nativeName"])
+      : null;
+    const commonName = info.name["nativeName"][nativeNameObjProperty]
+      ? info.name["nativeName"][nativeNameObjProperty].common
+      : "undefined";
+    const languages = Object.values(info.languages).join(", ");
     moreDetailedInfoForEachCountry.innerHTML = `
         <div class="escape-div">
           <button class="escape">
@@ -74,7 +86,7 @@ function handleClickForEachCountry(eachCountry, info) {
             <h1>${info.name.common}</h1>
             <div class="name-details-parent">
               <div class="name">
-                <p>Native Name : <span>Belgie</span></p>
+                <p>Native Name : <span>${commonName}</span></p>
                 <p>Population: <span>${info.population}</span></p>
                 <p>Region : <span>${info.region}</span></p>
                 <p>Sub Region : <span>${info.subregion}</span></p>
@@ -82,15 +94,9 @@ function handleClickForEachCountry(eachCountry, info) {
               </div>
               <div class="details">
                 <p>Top Level Domain : <span>${topLevelDomain}</span></p>
-                <p>Currencies : <span>${specificCurrency.name}</span></p>
-                <p>Languages : <span>Dutch,French,German</span></p>
+                <p>Currencies : <span>${specificCurrency}</span></p>
+                <p>Languages : <span>${languages}</span></p>
               </div>
-            </div>
-            <div class="border-countries">
-              <h1>Border Countries :</h1>
-              <button>France</button>
-              <button>Germany</button>
-              <button>Netherlands</button>
             </div>
           </div>
         </div>
