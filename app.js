@@ -143,7 +143,6 @@ function noResultsFound() {
 }
 
 function countryMaker(data) {
-  console.log(data);
   if (data.length < totalCountry) {
     for (; currentCountry < data.length; currentCountry++) {
       countryMAkingCode(data, currentCountry);
@@ -185,7 +184,6 @@ moreButton.addEventListener("click", () => {
 
 input.addEventListener("keyup", (e) => {
   if ((e.keyCode >= 65 && e.keyCode <= 90) || e.key === "Enter") {
-    console.log(e.currentTarget.value);
     moreButton.classList.remove("not-visible");
     moreButton.classList.remove("fade");
     searchResultArray = [];
