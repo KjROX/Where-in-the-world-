@@ -183,7 +183,11 @@ moreButton.addEventListener("click", () => {
 });
 
 input.addEventListener("keyup", (e) => {
-  if ((e.keyCode >= 65 && e.keyCode <= 90) || e.key === "Enter") {
+  if (
+    (e.keyCode >= 65 && e.keyCode <= 90) ||
+    e.key === "Enter" ||
+    e.key === "Backspace"
+  ) {
     moreButton.classList.remove("not-visible");
     moreButton.classList.remove("fade");
     searchResultArray = [];
