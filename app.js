@@ -11,6 +11,8 @@ const filterByRegionOptions = Array.from(
   document.querySelectorAll(".select-options select option")
 );
 const moreDetailedInfoForEachCountry = document.querySelector(".modal-outer");
+const themeChanger = document.querySelector(".theme");
+const themeStatus = localStorage.getItem("darkMode");
 
 //Functions
 function searchByRegion(query) {
@@ -232,4 +234,27 @@ filterByRegionOptions.forEach((option) => {
     countryMaker(searchResultArray);
     moreButton.classList.remove("not-visible");
   });
+});
+
+if (themeStatus === "enabled") {
+  document.body.classList.add("dark-theme");
+  themeChanger.querySelector("img").src = "./sun.svg";
+  themeChanger.querySelector("span").textContent = "Light Mode";
+}
+
+themeChanger.addEventListener("click", (e) => {
+  document.body.classList.toggle("dark-theme");
+  if (document.body.classList.contains("dark-theme")) {
+    moreDetailedInfoForEachCountry.querySelector(".escape img").src =
+      "./arrow-left-white.svg";
+    themeChanger.querySelector("img").src = "./sun-white.svg";
+    themeChanger.querySelector("span").textContent = "Light Mode";
+    localStorage.setItem("darkMode", "enabled");
+  } else {
+    moreDetailedInfoForEachCountry.querySelector(".escape img").src =
+      "./arrow-left-black.svg";
+    themeChanger.querySelector("img").src = "./moon.svg";
+    themeChanger.querySelector("span").textContent = "Dark Mode";
+    localStorage.setItem("darkMode", "disabled");
+  }
 });

@@ -5,6 +5,16 @@
 }
 html {
   font-size: 62.5%;
+  --elements-color: white;
+  --background-color: #fafafa;
+  --text-color: black;
+  --text-color-input: #858585;
+}
+.dark-theme {
+  --elements-color: #2b3945;
+  --background-color: #202c37;
+  --text-color: white;
+  --text-color-input: white;
 }
 body {
   font-family: "Nunito Sans", sans-serif;
@@ -19,7 +29,7 @@ header {
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
-  background-color: white;
+  background-color: var(--elements-color);
   z-index: 1000;
 }
 .head {
@@ -29,18 +39,20 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: var(--text-color);
 }
 .theme {
   display: flex;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
 }
 .theme span {
   font-size: 1.5rem;
   font-weight: 800;
 }
 main {
-  background-color: #fafafa;
+  background-color: var(--background-color);
   min-height: 90vh;
   padding: 3rem 0rem;
 }
@@ -54,7 +66,7 @@ main {
 .search-input {
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: var(--elements-color);
   width: 100%;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -72,6 +84,12 @@ main {
   border: none;
   outline: none;
   border-radius: 5px;
+  color: var(--text-color-input);
+  background-color: var(--elements-color);
+}
+.search-input input::placeholder {
+  color: var(--text-color-input);
+  opacity: 1;
 }
 .select-options {
   width: 50%;
@@ -90,13 +108,14 @@ main {
   border: none;
   outline: none;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--elements-color);
+  color: var(--text-color);
 }
 .select-options::after {
   content: "\25BC";
   position: absolute;
-  background: white;
-  color: black;
+  background: var(--elements-color);
+  color: var(--text-color);
   top: 0;
   right: 0;
   padding: 1.5rem 1rem;
@@ -121,12 +140,15 @@ main {
   justify-content: center;
   align-items: center;
   text-align: center;
+  color: var(--text-color);
 }
 
 .each-country {
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   cursor: pointer;
+  background-color: var(--elements-color);
+  color: var(--text-color);
 }
 .flag {
   width: 100%;
@@ -149,6 +171,7 @@ main {
 .description p span {
   padding-left: 1rem;
   font-weight: 600;
+  color: var(--text-color-input);
 }
 .more-button {
   width: 100%;
@@ -180,7 +203,7 @@ main {
   top: 0;
   left: 0;
   width: 100vw;
-  background-color: white;
+  background-color: var(--background-color);
   z-index: 10;
   opacity: 0;
   pointer-events: none;
@@ -203,7 +226,8 @@ main {
   border-radius: 10px;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  background: white;
+  background: var(--elements-color);
+  color: var(--text-color);
 }
 .modal-inner {
   width: 90%;
@@ -225,12 +249,16 @@ main {
   flex-direction: column;
   gap: 2rem;
 }
+.description h1 {
+  color: var(--text-color);
+}
 .name-details-parent {
   display: flex;
   width: 100%;
   flex-direction: column;
   font-size: 1.3rem;
   line-height: 2.5rem;
+  color: var(--text-color);
 }
 .border-countries {
   display: flex;
