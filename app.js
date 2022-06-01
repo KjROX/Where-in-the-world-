@@ -78,7 +78,7 @@ function handleClickForEachCountry(eachCountry, info) {
     moreDetailedInfoForEachCountry.innerHTML = `
         <div class="escape-div">
           <button class="escape">
-            <img src="./arrow-left-black.svg" alt="" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             <h3>Back</h3>
           </button>
         </div>
@@ -238,22 +238,18 @@ filterByRegionOptions.forEach((option) => {
 
 if (themeStatus === "enabled") {
   document.body.classList.add("dark-theme");
-  themeChanger.querySelector("img").src = "./sun.svg";
+  themeChanger.querySelector("img").src = "./sun-white.svg";
   themeChanger.querySelector("span").textContent = "Light Mode";
 }
 
 themeChanger.addEventListener("click", (e) => {
   document.body.classList.toggle("dark-theme");
   if (document.body.classList.contains("dark-theme")) {
-    moreDetailedInfoForEachCountry.querySelector(".escape img").src =
-      "./arrow-left-white.svg";
     themeChanger.querySelector("img").src = "./sun-white.svg";
     themeChanger.querySelector("span").textContent = "Light Mode";
     localStorage.setItem("darkMode", "enabled");
   } else {
-    moreDetailedInfoForEachCountry.querySelector(".escape img").src =
-      "./arrow-left-black.svg";
-    themeChanger.querySelector("img").src = "./moon.svg";
+    themeChanger.querySelector("img").src = "./moon-black.svg";
     themeChanger.querySelector("span").textContent = "Dark Mode";
     localStorage.setItem("darkMode", "disabled");
   }
