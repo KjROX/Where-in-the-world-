@@ -185,6 +185,7 @@ main {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s;
+  padding-top: 9rem;
 }
 .modal-outer.open {
   opacity: 1;
@@ -193,7 +194,6 @@ main {
 .escape-div {
   width: 90%;
   margin: 3rem auto;
-  margin-top: 5rem;
 }
 .escape-div button {
   display: flex;
