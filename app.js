@@ -1,6 +1,6 @@
 //Variables
-let currentCountry = 0;
-let totalCountry = currentCountry + 12;
+let currentCountryIndex = 0;
+let totalCountryInEachLoad = currentCountryIndex + 12;
 let dataArray;
 let clickedOnOption = false;
 let searchResultArray;
@@ -131,6 +131,7 @@ function countryMAkingCode(data, i) {
         </div>`;
   allCountries.appendChild(eachCountry);
   handleClickForEachCountry(eachCountry, data[i]);
+  moreButton.classList.remove("not-visible");
 }
 
 function noResultsFound() {
@@ -145,16 +146,20 @@ function noResultsFound() {
 }
 
 function countryMaker(data) {
-  if (data.length < totalCountry) {
-    for (; currentCountry < data.length; currentCountry++) {
-      countryMAkingCode(data, currentCountry);
+  if (data.length < totalCountryInEachLoad) {
+    for (; currentCountryIndex < data.length; currentCountryIndex++) {
+      countryMAkingCode(data, currentCountryIndex);
     }
   } else {
-    for (; currentCountry < totalCountry; currentCountry++) {
-      countryMAkingCode(data, currentCountry);
+    for (
+      ;
+      currentCountryIndex < totalCountryInEachLoad;
+      currentCountryIndex++
+    ) {
+      countryMAkingCode(data, currentCountryIndex);
     }
   }
-  if (currentCountry === data.length) {
+  if (currentCountryIndex === data.length) {
     moreButton.classList.add("fade");
   }
 }
@@ -174,16 +179,16 @@ async function fetchAllCountriesData() {
 fetchAllCountriesData();
 
 //Event-Listeners
+
 moreButton.addEventListener("click", () => {
-  currentCountry = totalCountry;
-  totalCountry = currentCountry + 12;
+  currentCountryIndex = totalCountryInEachLoad;
+  totalCountryInEachLoad = currentCountryIndex + 12;
   if (clickedOnOption) {
     countryMaker(searchResultArray);
   } else {
     countryMaker(dataArray);
   }
 });
-
 input.addEventListener("keyup", (e) => {
   if (
     (e.keyCode >= 65 && e.keyCode <= 90) ||
@@ -204,14 +209,14 @@ input.addEventListener("keyup", (e) => {
     } else {
       allCountries.innerHTML = ``;
       allCountries.classList.remove("flex");
-      currentCountry = 0;
-      totalCountry = 12;
+      currentCountryIndex = 0;
+      totalCountryInEachLoad = 12;
       countryMaker(searchResultArray);
       clickedOnOption = true;
     }
     if (e.currentTarget.value === ``) {
-      currentCountry = 0;
-      totalCountry = 12;
+      currentCountryIndex = 0;
+      totalCountryInEachLoad = 12;
       clickedOnOption = false;
       allCountries.innerHTML = ``;
       allCountries.classList.remove("flex");
@@ -225,8 +230,8 @@ input.addEventListener("keyup", (e) => {
 });
 filterByRegionOptions.forEach((option) => {
   option.addEventListener("click", (e) => {
-    currentCountry = 0;
-    totalCountry = 12;
+    currentCountryIndex = 0;
+    totalCountryInEachLoad = 12;
     clickedOnOption = true;
     searchResultArray = searchByRegion(e.currentTarget.value);
     allCountries.innerHTML = ``;

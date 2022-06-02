@@ -155,6 +155,8 @@ main {
 }
 .flag img {
   width: 100%;
+  height: 15rem;
+  object-fit: cover;
 }
 .name-description {
   padding: 2rem;
