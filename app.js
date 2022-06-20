@@ -7,9 +7,7 @@ let searchResultArray;
 const allCountries = document.querySelector(".countries");
 const moreButton = document.querySelector(".more-button button");
 const input = document.querySelector(".search-input input");
-const filterByRegionOptions = Array.from(
-  document.querySelectorAll(".select-options select option")
-);
+const filterByRegion = document.querySelector(".select-options select");
 const moreDetailedInfoForEachCountry = document.querySelector(".modal-outer");
 const themeChanger = document.querySelector(".theme");
 const themeStatus = localStorage.getItem("darkMode");
@@ -178,6 +176,17 @@ async function fetchAllCountriesData() {
 }
 fetchAllCountriesData();
 
+function handleFilterByRegion(e) {
+  currentCountryIndex = 0;
+  totalCountryInEachLoad = 12;
+  clickedOnOption = true;
+  searchResultArray = searchByRegion(e.currentTarget.value);
+  allCountries.innerHTML = ``;
+  allCountries.classList.remove("flex");
+  countryMaker(searchResultArray);
+  moreButton.classList.remove("not-visible");
+}
+
 //Event-Listeners
 
 moreButton.addEventListener("click", () => {
@@ -228,18 +237,8 @@ input.addEventListener("keyup", (e) => {
     return;
   }
 });
-filterByRegionOptions.forEach((option) => {
-  option.addEventListener("click", (e) => {
-    currentCountryIndex = 0;
-    totalCountryInEachLoad = 12;
-    clickedOnOption = true;
-    searchResultArray = searchByRegion(e.currentTarget.value);
-    allCountries.innerHTML = ``;
-    allCountries.classList.remove("flex");
-    countryMaker(searchResultArray);
-    moreButton.classList.remove("not-visible");
-  });
-});
+
+filterByRegion.addEventListener("change", handleFilterByRegion);
 
 if (themeStatus === "enabled") {
   document.body.classList.add("dark-theme");
