@@ -30,7 +30,6 @@ header {
   position: sticky;
   top: 0;
   background-color: var(--elements-color);
-  z-index: 1000;
 }
 .head {
   width: 90%;
@@ -200,7 +199,7 @@ main {
   border: 2px solid grey;
 }
 .modal-outer {
-  min-height: 100vh;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
@@ -210,7 +209,7 @@ main {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s;
-  padding-top: 9rem;
+  /* padding-top: 9rem; */
 }
 .modal-outer.open {
   opacity: 1;

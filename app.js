@@ -10,7 +10,7 @@ const input = document.querySelector(".search-input input");
 const filterByRegion = document.querySelector(".select-options select");
 const moreDetailedInfoForEachCountry = document.querySelector(".modal-outer");
 const themeChanger = document.querySelector(".theme");
-const themeStatus = localStorage.getItem("darkMode");
+let themeStatus = localStorage.getItem("darkMode");
 
 //Functions
 function searchByRegion(query) {
@@ -54,6 +54,29 @@ function openModal() {
 function closeModal() {
   moreDetailedInfoForEachCountry.classList.remove("open");
   document.body.classList.remove("disable-scroll");
+  themeStatus = localStorage.getItem("darkMode");
+  if (themeStatus === "enabled") {
+    document.body.classList.add("dark-theme");
+    themeChanger.querySelector("img").src = "./sun-white.svg";
+    themeChanger.querySelector("span").textContent = "Light Mode";
+  } else {
+    document.body.classList.remove("dark-theme");
+    themeChanger.querySelector("img").src = "./moon-black.svg";
+    themeChanger.querySelector("span").textContent = "Dark Mode";
+  }
+}
+
+function handleModalThemeChanger() {
+  document.body.classList.toggle("dark-theme");
+  if (document.body.classList.contains("dark-theme")) {
+    this.querySelector("img").src = "./sun-white.svg";
+    this.querySelector("span").textContent = "Light Mode";
+    localStorage.setItem("darkMode", "enabled");
+  } else {
+    this.querySelector("img").src = "./moon-black.svg";
+    this.querySelector("span").textContent = "Dark Mode";
+    localStorage.setItem("darkMode", "disabled");
+  }
 }
 
 function handleClickForEachCountry(eachCountry, info) {
@@ -74,6 +97,15 @@ function handleClickForEachCountry(eachCountry, info) {
       : "undefined";
     const languages = Object.values(info.languages).join(", ");
     moreDetailedInfoForEachCountry.innerHTML = `
+        <header>
+      <div class="head">
+        <h1>Where in the world?</h1>
+        <div class="theme theme-temp">
+          <img src="./moon-black.svg" alt="" />
+          <span>Dark Mode</span>
+        </div>
+      </div>
+    </header>
         <div class="escape-div">
           <button class="escape">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -103,10 +135,25 @@ function handleClickForEachCountry(eachCountry, info) {
       `;
     openModal();
     const backButton = moreDetailedInfoForEachCountry.querySelector(".escape");
-    const eventListenerAdded = backButton.getAttribute("eventListener");
-    if (!eventListenerAdded) {
+    const eventListenerForBackButtonAdded =
+      backButton.getAttribute("eventListener");
+    if (!eventListenerForBackButtonAdded) {
       backButton.addEventListener("click", closeModal);
       backButton.setAttribute("eventListener", "true");
+    }
+    const modalthemeChanger =
+      moreDetailedInfoForEachCountry.querySelector(".theme-temp");
+    themeStatus = localStorage.getItem("darkMode");
+    if (themeStatus === "enabled") {
+      document.body.classList.add("dark-theme");
+      modalthemeChanger.querySelector("img").src = "./sun-white.svg";
+      modalthemeChanger.querySelector("span").textContent = "Light Mode";
+    }
+    const eventListenerForModalThemeChangerAdded =
+      modalthemeChanger.getAttribute("eventListener");
+    if (!eventListenerForModalThemeChangerAdded) {
+      modalthemeChanger.addEventListener("click", handleModalThemeChanger);
+      modalthemeChanger.setAttribute("eventListener", "true");
     }
   });
 }
